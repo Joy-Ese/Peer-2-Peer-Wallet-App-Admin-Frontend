@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col-12 tranDiv">
+    <div class="mt-3">
+      <div class="filterCard d-flex justify-content-between">
+        <div class="col-12">
+          <div class="d-flex justify-content-between">
+            <h4 class="filterText"><b>Filter By:</b></h4> 
+            <div class="filterInput mx-2">
+              <input type="search" [(ngModel)]="searchText" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive mt-2 mx-2">
+        <table class="table table-bordered text-center align-middle" 
+        *ngIf="(sysTxns | filterBy: searchText).length > 0; else noResults">
+          <thead>
+            <tr>
+              <th scope="col" (click)="setOrder('amount')">
+                AMOUNT <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+              </th>
+              <th scope="col" (click)="setOrder('narration')">
+                NARRATION <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+              </th>
+              <th scope="col" (click)="setOrder('systAccountNumber')">
+                SYSTEM ACCOUNT <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+              </th>
+              <th scope="col" (click)="setOrder('transactionType')">
+                TYPE <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+              </th>
+              <th scope="col" (click)="setOrder('rate')">
+                RATE <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+              </th>
+              <th scope="col" (click)="setOrder('date')">
+                DATE <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="tableBody">
+            <tr *ngFor="let item of sysTxns | filterBy: searchText | paginate: {itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index">
+              <td>{{item.amount |currency:item.currency:"symbol":"1.2-2"}}</td>
+              <td>{{item.narration}}</td>
+              <td>{{item.systAccountNumber}}</td>
+              <td>
+                <p [ngClass]="item.transactionType == 'CREDIT' ? 'badge bg-success' : 'badge bg-danger'">{{item.transactionType}}</p>
+              </td>
+              <td>{{item.rate |currency:"&#8358;":"symbol":"1.2-2"}}</td>
+              <td>
+                <p class="badge bg-primary dateColour">{{item.date | date:'dd/MM/YYYY hh:mm a'}}</p> <br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center raisedbox">
+          <pagination-controls
+            previousLabel="Prev"
+            nextLabel="Next"
+            (pageChange)="onTableDataChange($event)"
+          >
+          </pagination-controls>
+        </div>
+
+        <ng-template #noResults>
+          <p>No results found for "{{searchText}}".</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

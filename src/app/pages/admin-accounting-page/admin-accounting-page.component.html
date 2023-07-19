@@ -1,0 +1,131 @@
+<div class="row">
+  <div class="container d-flex"  [ngSwitch]="switchTabs">
+    <div class="firstDiv">
+      <div class="d-flex">
+        <div class="tabBtns">
+          <div>
+            <button class="btn btn-outline-secondary" (click)="changeContent('updateCurrencyAndConversion')" type="button">Update Charges And Rates</button>
+          </div>
+
+          <div>
+            <button class="btn btn-outline-secondary mBB" (click)="changeContent('systemAcct')" type="button">Create System Accounts</button>
+          </div>
+
+          <div>
+            <button class="btn btn-outline-secondary mBB" (click)="changeContent('systemBalances')" type="button">System Balances</button>
+          </div>
+        </div>
+        <mat-divider [vertical]="true"></mat-divider>
+      </div>
+    </div>
+
+    <div class="secondDiv">
+      <div class="switchCases" *ngSwitchCase="'systemAcct'">
+        <div class="row">
+          <h4 class="fw-bold">Create a system account</h4>
+          <div class="d-flex mt-5">
+            <div>
+              <img class="img-fluid imgLog" src="../../../assets/images/undraw_admin_syst.svg" alt="">
+            </div>
+            <div class="col-9">
+              <form #createSysAcctForm="ngForm">
+                <div class="form-outline">
+                  <h4 class="mx-2">Choose a currency for the system account</h4>
+                  <div class="col-md-8 mb-3">
+                    <select [(ngModel)]="fCurrency" id="furrency" #currency class="currPill form-control mat-elevation-z4" matRipple name="currency" required>
+                      <option  value="">Select a currency from the following options</option>
+                      <option value="AUD">AUD</option>
+                      <option value="CAD">CAD</option>
+                      <option value="GHS">GHS</option>
+                      <option value="KPW">KPW</option>
+                      <option value="NOK">NOK</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button class="btn btn-outline-secondary crWallet mb-3 mt-3" type="submit" (click)="onSysAcctCreate(createSysAcctForm.value)">
+                  Create System Account
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="switchCases" *ngSwitchCase="'updateCurrencyAndConversion'">
+        <div class="row">
+          <h4 class="fw-bold">Update currency charges and conversion rates</h4>
+          <div class="d-flex mt-5">
+            <div>
+              <img class="img-fluid imgLog" src="../../../assets/images/undraw_admin_syst.svg" alt="">
+            </div>
+            <div class="col-9">
+              <form #updateRateChargeForm="ngForm">
+                <div class="form-outline">
+                  <h4 class="mx-2">Choose a currency for update:</h4>
+                  <div class="col-md-8 mb-3">
+                    <select [(ngModel)]="fCurrency" id="furrency" #currency class="currPill form-control mat-elevation-z4" matRipple name="currency" required>
+                      <option  value="">Select a currency from the following options</option>
+                      <option *ngFor="let x of seededCurrencies" id="checkCurrency" value={{x.currency}}>{{x.currency}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-8 mb-3">
+                  <h4 class="form-label mx-2">Select action on what to update:</h4>
+                  <select [(ngModel)]="fAction" #action class="currPill form-control mat-elevation-z4" matRipple name="action" required>
+                    <option  value="">Select an action to perform</option>
+                    <option value="Charge">Charge</option>
+                    <option value="Rate">Rate</option>
+                  </select>
+                </div>
+
+                <div class="col-md-8 mb-3 mt-2">
+                  <h4 class="form-label mx-2">Amount:</h4>
+                  <input #amount type="number" class="currPill form-control mat-elevation-z4" name="amount" ngModel required/>
+                </div>
+
+                <button class="btn btn-outline-secondary onRateCharge mb-3 mt-3" type="submit" (click)="onRateChargeUpdate(updateRateChargeForm.value)">
+                  Update
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="switchCases" *ngSwitchCase="'systemBalances'">
+        <div class="row">
+          <h4 class="fw-bold">System Balances</h4>
+          <div class="row">
+            <div class="col-12">
+              <mat-tab-group animationDuration="2000ms" mat-stretch-tabs="false" mat-align-tabs="end">
+                <mat-tab label={{info.currency}} *ngFor="let info of sysAcctDetails">
+                  <div class="firstDivBlue">
+                    <div class="d-flex">
+                      <div class="bdgDivBlue">
+                        <div class="mt-4">
+                          <span class="myBal text-center mx-4">Balance</span>
+                          <div class="mx-4 mt-2 d-flex">
+                            <h1 class="balFigure text-center">{{info.balance |currency:info.currency:"symbol":"1.2-2"}}</h1> 
+                            <!-- <span class="balCurr text-center mt-2">{{info.currency}}</span> -->
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-4">
+                        <div>
+                          <span class="mx-4 text-center myAcct">Account Number</span>
+                          <h1 class="mt-2 text-center acctNum">{{info.accountNumber}}</h1>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<app-admin-spinner></app-admin-spinner>

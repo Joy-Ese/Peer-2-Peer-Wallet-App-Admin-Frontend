@@ -1,0 +1,82 @@
+.imgLogo {
+	width: 180px;
+	height: 90px;
+	margin-left: -10px;
+}
+
+.imgElement {
+	width: 70px;
+	height: 70px;
+	border: 1px solid #ff0033;
+  margin-top: 10px;
+}
+
+.ico {
+  color: white;
+	font-size: 27px;
+}
+
+mat-toolbar {
+  height: 110px!important;
+}
+
+mat-sidenav {
+  margin: 16px;
+  width: 220px;
+  border-right: none;
+  background: #003366;
+  color: white;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+
+.content {
+  height: calc(119vh - 98px);
+  margin: 16px;
+  margin-left: 32px;
+}
+
+mat-sidenav-container {
+  height: calc(117vh - 65px);
+}
+
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 0.9rem;
+}
+
+.menu-button:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.mBB {
+  margin-top: 30px;
+}
+
+span {
+  color: white;
+}
+
+mat-icon {
+  margin-right: 8px;
+}
+
+mat-divider {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.adminDiv {
+  position: relative;
+  left: 90%;
+}
+
+.adminName {
+  color: #003366;
+}

@@ -1,0 +1,33 @@
+.tranDiv {
+  color: #003366!important;
+  font-weight: 500;
+  border-radius: 25px;
+}
+
+.tableBody {
+  font-size: 18px;
+}
+
+.filterCard {
+  color: #003366;
+}
+
+.filterText {
+  margin-left: 22rem;
+}
+
+.filterInput {
+  margin-top: -1px;
+}
+
+.dateColour {
+  background-color: #003366!important;
+}
+
+.raisedbox { 
+  padding-top: 50px;
+}
+
+.pointer {
+  cursor: pointer;
+}

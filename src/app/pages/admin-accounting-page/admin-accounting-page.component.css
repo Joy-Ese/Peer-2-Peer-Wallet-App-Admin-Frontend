@@ -1,0 +1,103 @@
+.btn-outline-secondary {
+  background-color: #FF0033!important;
+  color: white!important;
+}
+
+.btn-outline-secondary:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.tabBtns {
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  width: 300px;
+}
+
+.mBB {
+  margin-top: 30px;
+}
+
+mat-divider {
+  background-color: #FF0033;
+  height: calc(119vh - 98px);
+  width: 0px !important;
+  position: inherit !important;
+}
+
+.switchCases {
+  padding-left: 25px;
+  margin-top: 15px;
+}
+
+.imgLog {
+  display: block;
+  width: 80%;
+}
+/* #003366 */
+/* #FF0033 */
+.currPill {
+  border: #FF0033 1px solid;
+  padding: 5px;
+  border-radius: 25px;
+  cursor: pointer;
+  text-align: center;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+
+  -webkit-user-drag: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.crWallet {
+  margin-left: 70px;
+}
+
+.onRateCharge {
+  margin-left: 130px;
+}
+
+.firstDivBlue {
+  border: 2px #FF0033 solid;
+  margin-left: 50px;
+  border-radius: 25px;
+  width: 80%;
+  height: 21vh;
+  margin-top: 65px!important;
+}
+
+.bdgDivBlue {
+  background-color: #FF0033;
+  border-radius: 30px;
+  width: 50%;
+  margin-left: -6px;
+  height: 20.5vh;
+}
+
+.myBal {
+  color: white;
+  font-size: 18px;
+}
+
+.balFigure {
+  color: white;
+}
+
+.balCurr {
+  color: white;
+}
+
+.myAcct {
+  color: black;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.acctNum {
+  color: black;
+  font-weight: 400;
+}
+
