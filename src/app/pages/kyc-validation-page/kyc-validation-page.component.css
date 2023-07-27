@@ -23,16 +23,21 @@
 .dateColour {
   background-color: #003366!important;
 }
-
+/* #FF0033 */
 .raisedbox { 
   padding-top: 50px;
 }
 
-.pointer {
-  cursor: pointer;
+.kycIMG {
+  width: 70px;
+	height: 70px;
 }
 
-.sortByDiv {
-  font-size: 13px;
-  cursor: pointer;
+.pendingSpan {
+  color: #FF0033;
+  font-size: 20px;
 }
+
+
+
+

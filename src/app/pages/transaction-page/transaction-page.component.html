@@ -1,15 +1,27 @@
 <div class="row">
   <div class="col-12 tranDiv">
     <div class="mt-3">
+      <h2 class="mx-2">All System Transactions</h2>
       <div class="filterCard d-flex justify-content-between">
         <div class="col-12">
           <div class="d-flex justify-content-between">
-            <h4 class="filterText"><b>Filter By:</b></h4> 
+            <h4 class="filterText mt-2"><b>Filter By:</b></h4> 
             <div class="filterInput mx-2">
               <input type="search" [(ngModel)]="searchText" class="form-control">
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="mx-2">
+        Sort Transactions By:
+        <p class="badge bg-success nx-2 sortByDiv" (click)="getCredits()">CREDIT</p>
+        <p class="badge bg-danger mx-2 sortByDiv" (click)="getDebits()">DEBIT</p>
+        <p class="badge bg-primary mx-2 sortByDiv" (click)="getAll()">ALL</p>
+        <p class="badge bg-warning mx-2 sortByDiv" (click)="getNGNWallet()">NGN Wallets</p>
+        <p class="badge bg-info mx-2 sortByDiv" (click)="getUSDWallet()">USD Wallets</p>
+        <p class="badge bg-secondary mx-2 sortByDiv" (click)="getEURWallet()">EUR Wallets</p>
+        <p class="badge bg-dark mx-2 sortByDiv" (click)="getGBPWallet()">GBP Wallets</p>
       </div>
 
       <div class="table-responsive mt-2 mx-2">
@@ -39,7 +51,8 @@
           </thead>
           <tbody class="tableBody">
             <tr *ngFor="let item of sysTxns | filterBy: searchText | paginate: {itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index">
-              <td>{{item.amount |currency:item.currency:"symbol":"1.2-2"}}</td>
+              <!-- <td>{{item.amount |currency:item.currency:"symbol":"1.2-2"}}</td> -->
+              <td>{{item.amount}}</td>
               <td>{{item.narration}}</td>
               <td>{{item.systAccountNumber}}</td>
               <td>
@@ -63,7 +76,7 @@
         </div>
 
         <ng-template #noResults>
-          <p>No results found for "{{searchText}}".</p>
+          <p>No results found</p>
         </ng-template>
       </div>
     </div>

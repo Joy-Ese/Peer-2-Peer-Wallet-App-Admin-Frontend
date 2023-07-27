@@ -1,5 +1,5 @@
 .btn-outline-secondary {
-  background-color: #FF0033!important;
+  background-color: #003366!important;
   color: white!important;
 }
 
@@ -12,7 +12,7 @@
   color: white;
   border-radius: 10px;
   padding: 10px;
-  width: 300px;
+  width: 200px;
 }
 
 .mBB {
@@ -20,7 +20,7 @@
 }
 
 mat-divider {
-  background-color: #FF0033;
+  background-color: #003366;
   height: calc(119vh - 98px);
   width: 0px !important;
   position: inherit !important;
@@ -35,8 +35,12 @@ mat-divider {
   display: block;
   width: 80%;
 }
-/* #003366 */
-/* #FF0033 */
+
+.iconEye {
+  position: absolute;
+  left: 73%;
+  margin-top: 10px;
+}
 
 .tranDiv {
   color: #003366!important;
@@ -53,7 +57,7 @@ mat-divider {
 }
 
 .filterText {
-  margin-left: 24rem;
+  margin-left: 30rem;
 }
 
 .filterInput {
@@ -71,3 +75,15 @@ mat-divider {
 .pointer {
   cursor: pointer;
 }
+
+.btn-outline-success {
+  background-color: #FF0033!important;
+  color: white!important;
+}
+
+.btn-outline-success:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+

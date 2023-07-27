@@ -74,9 +74,16 @@ mat-divider {
 
 .adminDiv {
   position: relative;
-  left: 90%;
+  left: 140%;
 }
 
 .adminName {
   color: #003366;
+}
+
+.spanBadge {
+  position: absolute;
+  right: -10%;
+  bottom: 5%;
+  font-size: 12px;
 }

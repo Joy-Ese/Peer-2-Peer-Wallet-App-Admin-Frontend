@@ -7,6 +7,7 @@ import { BnNgIdleService } from 'bn-ng-idle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AdminAuthService } from 'src/app/auth/admin-auth.service';
 import { SnackBarComponent } from 'src/app/reuseable-components/snack-bar/snack-bar.component';
+import { AdminInformation } from 'src/app/reuseable-components/adminImformation';
 
 @Component({
   selector: 'app-admin-dashboard-page',
@@ -18,6 +19,8 @@ export class AdminDashboardPageComponent implements OnInit{
   baseUrl : string = "http://localhost:7236";
 
   adminUsername! : string;
+
+  adminDetails! : any;
 
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
@@ -38,7 +41,7 @@ export class AdminDashboardPageComponent implements OnInit{
         this.router.navigate(['/adminlogin']);
       }
     });
-    this.getAdminUsername();
+    this.adminDetails = AdminInformation();
   }
 
   passDataToSnackComponent() {
@@ -60,21 +63,6 @@ export class AdminDashboardPageComponent implements OnInit{
         this.sidenav.mode = 'side';
         this.sidenav.open();
       }
-    });
-  }
-
-  getAdminUsername() {
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json"
-    });
-    this.http.get<any>(`${this.baseUrl}/api/Dashboard/GetAdminUsername`, {headers: headers})
-    .subscribe({
-      next: (res) => {
-        this.adminUsername = res.username;
-      },
-      error: (err) => {
-        console.log(err);
-      },
     });
   }
 

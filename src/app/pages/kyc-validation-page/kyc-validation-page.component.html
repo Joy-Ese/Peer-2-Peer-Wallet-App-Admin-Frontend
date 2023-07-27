@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="col-12 tranDiv">
+    <div class="mt-3">
+      <h2 class="mx-2">Pending Kyc Uploads</h2>
+      <div class="mx-2 mt-3" *ngFor="let item of userInfoKycs | paginate: {itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index">
+        <mat-accordion>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title class="d-flex justify-content-between">
+                {{item.firstname}} {{item.lastname}}'s kyc upload is pending <span class="pendingSpan">!!!</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+              <div class="table-responsive mt-2 mx-2">
+                <table class="table table-bordered text-center align-middle">
+                  <thead>
+                    <tr>
+                      <th scope="col" (click)="setOrder('image')">
+                        IMAGE <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+                      </th>
+                      <th scope="col" (click)="setOrder('timeUploaded')">
+                        DATE UPLOADED <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+                      </th>
+                      <th scope="col">ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody class="tableBody">
+                    <tr *ngFor="let item of kycs" >
+                      <td><img src="{{item.image}}" class="img-responsive img-thumbnail img-fluid kycIMG" id="imgKYC" (click)="scaleImage()"></td>
+                      <td>
+                        <p class="badge bg-primary dateColour">{{item.timeUploaded | date:'dd/MM/YYYY hh:mm a'}}</p> <br>
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-outline-success mx-3" (click)="acceptImage(item.userId, item.filename)">
+                          <span class="mt-5">Accept</span>
+                          <i class="fa fa-check-square mx-2"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-outline-danger" (click)="removeImage(item.userId, item.filename)">
+                          <span>Reject</span>
+                          <i class="fa fa-times mx-2"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <div class="d-flex justify-content-center raisedbox mt-5">
+          <pagination-controls
+            previousLabel="Prev"
+            nextLabel="Next"
+            (pageChange)="onTableDataChange($event)"
+          >
+          </pagination-controls>
+        </div>
+      </div>
+
+      <div *ngIf="userInfoKycs.length == 0">
+        <h2 class="mx-2">There are no pending Kyc Uploads...</h2>
+      </div>
+    </div>
+  </div>
+</div>

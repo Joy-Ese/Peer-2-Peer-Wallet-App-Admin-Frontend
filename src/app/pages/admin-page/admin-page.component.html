@@ -1,0 +1,245 @@
+<div class="row">
+  <div class="container d-flex"  [ngSwitch]="switchTabs">
+    <div class="firstDiv">
+      <div class="d-flex">
+        <div class="tabBtns">
+          <div *ngIf="adminDetails.role == 'SuperAdmin'">
+            <button class="btn btn-outline-secondary" (click)="changeContent('allAdmins')" type="button">Admins List</button>
+          </div>
+
+          <div *ngIf="adminDetails.role == 'SuperAdmin'">
+            <button class="btn btn-outline-secondary mBB" (click)="changeContent('createAdmin')" type="button">Create an Admin</button>
+          </div>
+
+          <div>
+            <button class="btn btn-outline-secondary mBB" (click)="changeContent('lockedUsers')" type="button">Locked Users List</button>
+          </div>
+
+          <div>
+            <button class="btn btn-outline-secondary mBB" (click)="changeContent('lock/unlock')" type="button">Lock/Unlock User</button>
+          </div>
+        </div>
+        <mat-divider [vertical]="true"></mat-divider>
+      </div>
+    </div>
+
+    <div class="secondDiv">
+      <div class="switchCases" *ngSwitchCase="'createAdmin'">
+        <div class="row" *ngIf="adminDetails.role == 'SuperAdmin'">
+          <h4 class="fw-bold">Create an admin</h4>
+          <div class="d-flex mt-5">
+            <div>
+              <img class="img-fluid imgLog" src="../../../assets/images/undraw_create_admin.svg" alt="">
+            </div>
+            <div class="col-9">
+              <form #createAdminForm="ngForm">
+                <div class="form-outline">
+                  <div class="col-md-8 mb-3">
+                    <label class="form-label">Admin Username</label>
+                    <input #username type="text" class="form-control mat-elevation-z4" name="username" ngModel required/>
+                  </div>
+
+                  <div class="col-md-8 mb-3">
+                    <label class="form-label">Admin Email</label>
+                    <input #email type="email" class="form-control mat-elevation-z4" name="email" ngModel required/>
+                  </div>
+
+                  <div class="col-md-8 mb-3">
+                    <label class="form-label">Admin Role</label>
+                    <select [(ngModel)]="Role" #role class="form-control mat-elevation-z4" name="role" required>
+                      <option value="Admin">Admin</option>
+                      <option value="SuperAdmin">SuperAdmin</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button class="btn btn-outline-secondary mb-3 mt-3" type="submit" (click)="onAdminCreate(createAdminForm.value)">
+                  Create Admin
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="switchCases" *ngSwitchCase="'allAdmins'">
+        <div class="row" *ngIf="adminDetails.role == 'SuperAdmin'">
+          <h4 class="fw-bold">List of all admins</h4>
+          <div class="row">
+            <div class="col-12 tranDiv">
+              <div class="filterCard d-flex justify-content-between">
+                <div class="col-12">
+                  <div class="d-flex justify-content-between">
+                    <h4 class="filterText mt-2"><b>Filter By:</b></h4> 
+                    <div class="filterInput mx-2">
+                      <input type="search" [(ngModel)]="searchText" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="table-responsive mt-2 mx-2">
+                <table class="table table-bordered text-center align-middle" 
+                *ngIf="(allAdmins | filterBy: searchText).length > 0; else noResults">
+                  <thead>
+                    <tr>
+                      <th scope="col" (click)="setOrder('username')">
+                        USERNAME <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+                      </th>
+                      <th scope="col" (click)="setOrder('role')">
+                        ROLE <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+                      </th>
+                      <th scope="col" (click)="setOrder('email')">
+                        EMAIL <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+                      </th>
+                      <th scope="col">ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody class="tableBody">
+                    <tr *ngFor="let item of allAdmins | filterBy: searchText | paginate: {itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index">
+                      <td>{{item.username}}</td>
+                      <td>{{item.role}}</td>
+                      <td>{{item.email}}</td>
+                      <td>
+                        <button type="button" class="btn btn-outline-secondary mx-3" (click)="onDisableEnableAdmin(item.id)" *ngIf="item.isDisabled == true">
+                          Enable
+                        </button>
+                        <button type="button" class="btn btn-outline-success mx-3" (click)="onDisableEnableAdmin(item.id)" *ngIf="item.isDisabled == false">
+                          Disable
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="d-flex justify-content-center raisedbox">
+                  <pagination-controls
+                    previousLabel="Prev"
+                    nextLabel="Next"
+                    (pageChange)="onTableDataChange($event)"
+                  >
+                  </pagination-controls>
+                </div>
+
+                <ng-template #noResults>
+                  <p>No results found</p>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="switchCases" *ngSwitchCase="'lockedUsers'">
+        <div class="row">
+          <h4 class="fw-bold">List of locked users</h4>
+          <div class="row">
+            <div class="col-12 tranDiv">
+              <div class="filterCard d-flex justify-content-between">
+                <div class="col-12">
+                  <div class="d-flex justify-content-between">
+                    <h4 class="filterText mt-2"><b>Filter By:</b></h4> 
+                    <div class="filterInput mx-2">
+                      <input type="search" [(ngModel)]="searchText" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="table-responsive mt-2 mx-2">
+                <table class="table table-bordered text-center align-middle" 
+                *ngIf="(lockedUsers | filterBy: searchText).length > 0; else noResults">
+                  <thead>
+                    <tr>
+                      <th scope="col" (click)="setOrder('username')">
+                        USERNAME <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+                      </th>
+                      <th scope="col" (click)="setOrder('reason')">
+                        REASON <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+                      </th>
+                      <th scope="col" (click)="setOrder('code')">
+                        CODE <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="tableBody">
+                    <tr *ngFor="let item of lockedUsers | filterBy: searchText | paginate: {itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index">
+                      <td>{{item.username}}</td>
+                      <td>{{item.reason}}</td>
+                      <td>{{item.code}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="d-flex justify-content-center raisedbox">
+                  <pagination-controls
+                    previousLabel="Prev"
+                    nextLabel="Next"
+                    (pageChange)="onTableDataChange($event)"
+                  >
+                  </pagination-controls>
+                </div>
+
+                <ng-template #noResults>
+                  <p>No results found</p>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="switchCases" *ngSwitchCase="'lock/unlock'">
+        <div class="row">
+          <h4 class="fw-bold">Lock or Unlock a user</h4>
+          <div class="d-flex mt-5">
+            <div>
+              <img class="img-fluid imgLog" src="../../../assets/images/undraw_locked_unlocked.svg" alt="">
+            </div>
+            <div class="col-9">
+              <form #lockedUnlockedForm="ngForm">
+                <div class="form-outline">
+                  <div class="col-md-8 mb-3">
+                    <label class="form-label">Username</label>
+                    <input #username type="text" class="form-control mat-elevation-z4" name="username" ngModel required/>
+                  </div>
+                  <div class="col-md-8 mb-3">
+                    <label class="form-label">Action</label>
+                    <select [(ngModel)]="Action" #action class="form-control mat-elevation-z4" name="action" required>
+                      <option value="Lock">Lock</option>
+                      <option value="Unlock">Unlock</option>
+                    </select>
+                  </div>
+                  <div class="col-md-8 mb-3">
+                    <label class="form-label">Code</label>
+                    <select [(ngModel)]="Code" #code class="form-control mat-elevation-z4" name="code" required>
+                      <option value="555">555</option>
+                      <option value="999">999</option>
+                      <option value="N/A">N/A</option>
+                    </select>
+                  </div>
+                  <div class="col-md-8 mb-3">
+                    <label class="form-label">Reason</label>
+                    <select [(ngModel)]="Reason" #reason class="form-control mat-elevation-z4" name="reason" required>
+                      <option value="No Attempts Left">No Attempts Left</option>
+                      <option value="Theft">Theft</option>
+                      <option value="N/A">N/A</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button *ngIf="Action == 'Lock'" class="btn btn-outline-secondary mb-3 mt-3" type="submit" (click)="onLockedUnlocked(lockedUnlockedForm.value)">
+                  Lock User
+                </button>
+
+                <button *ngIf="Action == 'Unlock'" class="btn btn-outline-secondary mb-3 mt-3" type="submit" (click)="onLockedUnlocked(lockedUnlockedForm.value)">
+                  Unlock User
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-admin-spinner></app-admin-spinner>

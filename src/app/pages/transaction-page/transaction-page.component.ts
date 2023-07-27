@@ -11,6 +11,7 @@ export class TransactionPageComponent implements OnInit{
   baseUrl : string = "http://localhost:7236";
 
   sysTxns!: any[];
+  tempSysTxns!: any[];
 
   searchText!: string;
 
@@ -20,8 +21,6 @@ export class TransactionPageComponent implements OnInit{
 
   order!: string;
   reverse: boolean = false;
-
-  sysAcctSelectes: boolean = false;
 
   constructor(private http: HttpClient,) {}
 
@@ -36,6 +35,35 @@ export class TransactionPageComponent implements OnInit{
     this.order = value; 
   }
 
+  getCredits() {
+    const credits = this.tempSysTxns.filter((x: any) => x.transactionType === "CREDIT");
+    this.sysTxns = credits;
+  }
+  getDebits() {
+    const debits = this.tempSysTxns.filter((x: any) => x.transactionType === "DEBIT");
+    this.sysTxns = debits;
+  }
+  getAll() {
+    const allTxns = this.tempSysTxns;
+    this.sysTxns = allTxns;
+  }
+  getNGNWallet() {
+    const ngnWallet = this.tempSysTxns.filter((x: any) => x.systAccountNumber.includes("NGN"));
+    this.sysTxns = ngnWallet;
+  }
+  getUSDWallet() {
+    const usdWallet = this.tempSysTxns.filter((x: any) => x.systAccountNumber.includes("USD"));
+    this.sysTxns = usdWallet;
+  }
+  getEURWallet() {
+    const eurWallet = this.tempSysTxns.filter((x: any) => x.systAccountNumber.includes("EUR"));
+    this.sysTxns = eurWallet;
+  }
+  getGBPWallet() {
+    const gbpWallet = this.tempSysTxns.filter((x: any) => x.systAccountNumber.includes("GBP"));
+    this.sysTxns = gbpWallet;
+  }
+
   getSysTxnsList() {
     const headers = new HttpHeaders({
       "Content-Type": "application/json"
@@ -45,6 +73,7 @@ export class TransactionPageComponent implements OnInit{
     .subscribe({
       next: (res) => {
         this.sysTxns = res;
+        this.tempSysTxns = res;
       },
       error: (err) => {
         console.log(err);

@@ -15,6 +15,7 @@ export class AdminLoginPageComponent implements OnInit{
 
   responseMsg! : string;
   status! : boolean;
+  isSecure! : boolean;
 
   showPassword: boolean = false;
 
@@ -39,19 +40,25 @@ export class AdminLoginPageComponent implements OnInit{
       next: (res) => {
         this.adminLoginResponseFromBackEnd = res as AdminLoginResponseFromBackEnd;
         this.status = this.adminLoginResponseFromBackEnd.status;
+        this.isSecure = this.adminLoginResponseFromBackEnd.isSecure;
         this.responseMsg = this.adminLoginResponseFromBackEnd.result;
         console.log(this.adminLoginResponseFromBackEnd);
         this.key = localStorage.setItem("adminLoginResponse", JSON.stringify(this.adminLoginResponseFromBackEnd));
         localStorage.setItem("adminToken", this.adminLoginResponseFromBackEnd.result);
-        const headers2 = new HttpHeaders({
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${this.adminLoginResponseFromBackEnd.result}`
-        });
 
-        if (this.status == true) {
+        if (this.status == true && this.isSecure == true) {
           this.adminAuthService.setAdminUserLoggedIn(true);
           this.router.navigate(['/admindashboard']);
         }
+
+        if (this.status == true && this.isSecure == false) {
+          this.adminAuthService.setAdminUserLoggedIn(false);
+          this.router.navigate(['/adminconfirmlogin']);
+        }
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       },
       error: (err) => {
         console.log(err);

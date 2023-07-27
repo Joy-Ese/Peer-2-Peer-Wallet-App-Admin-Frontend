@@ -15,7 +15,10 @@
         </div>
       </div>
       <div class="row">
-        <h2 class="adminDiv mt-4">Welcome, <span class="adminName">{{adminUsername}}</span></h2>
+        <h2 class="adminDiv mt-4">
+          Welcome, <span class="adminName">{{adminDetails.adminUsername}}</span>
+          <span class="badge bg-danger spanBadge">{{adminDetails.role}}</span>
+        </h2>
       </div>
       <div class="row">
         <div class="d-flex justify-content-between">
@@ -45,12 +48,12 @@
       <mat-icon class="ico">list</mat-icon>
       <span>Transactions</span>
     </button>
-    <button mat-button class="menu-button mBB" routerLink="">
+    <button mat-button class="menu-button mBB" routerLink="admins">
       <mat-icon class="ico">lock</mat-icon>
-      <span>User Accounts</span>
+      <span>Admin Account</span>
     </button>
-    <button mat-button class="menu-button mBB" routerLink="">
-      <mat-icon class="ico">lock_open</mat-icon>
+    <button mat-button class="menu-button mBB" routerLink="kycvalidations">
+      <mat-icon class="ico">contact_support</mat-icon>
       <span>Kyc Validations</span>
     </button>
     <mat-divider></mat-divider>

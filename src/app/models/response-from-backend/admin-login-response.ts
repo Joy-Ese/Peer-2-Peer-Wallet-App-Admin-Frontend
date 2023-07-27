@@ -1,7 +1,8 @@
 export interface AdminLoginResponseFromBackEnd{
   status : boolean;
-  isAdmin : boolean;
+  isSecure : boolean;
   result : string;
+  role : string;
   adminUsername : string;
   adminRefreshedToken : string;
 }

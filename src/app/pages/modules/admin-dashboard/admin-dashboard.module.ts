@@ -21,6 +21,9 @@ import { OrderModule } from 'ngx-order-pipe';
 import { MaterialModule } from 'src/app/material/material.module';
 import { SnackBarComponent } from 'src/app/reuseable-components/snack-bar/snack-bar.component';
 import { TransactionPageComponent } from '../../transaction-page/transaction-page.component';
+import { AdminPageComponent } from '../../admin-page/admin-page.component';
+import { KycValidationPageComponent } from '../../kyc-validation-page/kyc-validation-page.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 const routes: Routes = [
@@ -44,6 +47,14 @@ const routes: Routes = [
         path: "transactions",
         component: TransactionPageComponent
       },
+      {
+        path: "admins",
+        component: AdminPageComponent
+      },
+      {
+        path: "kycvalidations",
+        component: KycValidationPageComponent
+      },
     ]
   }
 ];
@@ -58,6 +69,8 @@ const routes: Routes = [
     FilterByPipe,
     SnackBarComponent,
     TransactionPageComponent,
+    AdminPageComponent,
+    KycValidationPageComponent,
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -72,6 +85,7 @@ const routes: Routes = [
     MatTabsModule,
     NgxPaginationModule,
     // OrderModule,
+    MatExpansionModule,
   ],
   providers: [
     { 

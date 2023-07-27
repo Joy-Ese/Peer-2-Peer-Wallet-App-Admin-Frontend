@@ -13,6 +13,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { PreSpinnerComponent } from './reuseable-components/pre-spinner/pre-spinner.component';
 import { PreLoadingInterceptor } from './reuseable-components/loader/pre-loading.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AdminLoginConfirmPageComponent } from './pages/admin-login-confirm-page/admin-login-confirm-page.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AdminLoginPageComponent,
     PageNotFoundComponent,
     PreSpinnerComponent,
+    AdminLoginConfirmPageComponent,
   ],
   imports: [
     BrowserModule,

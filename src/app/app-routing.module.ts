@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { AdminLoginPageComponent } from './pages/admin-login-page/admin-login-page.component';
 import { AdminAuthService } from './auth/admin-auth.service';
+import { AdminLoginConfirmPageComponent } from './pages/admin-login-confirm-page/admin-login-confirm-page.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: "adminlogin",
     component: AdminLoginPageComponent
+  },
+  {
+    path: "adminconfirmlogin",
+    component: AdminLoginConfirmPageComponent
   },
   {
     path: "notfound",

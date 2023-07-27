@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 type activeTab = "systemAcct" | "updateCurrencyAndConversion" | "systemBalances";
@@ -29,18 +28,40 @@ export class AdminAccountingPageComponent implements OnInit{
 
   sysAcctDetails! : any[];
 
-  constructor(private http: HttpClient, private router: Router,) {}
+  searchText!: string;
+
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 5;
+
+  order!: string;
+  reverse: boolean = false;
+
+  constructor(private http: HttpClient,) {}
 
   ngOnInit() {
     this.getSeededCurrencies();
     this.getSystemAccountDetails();
   }
 
+  setOrder(value: string) { 
+    if (this.order === value) { 
+      this.reverse = !this.reverse; 
+    } 
+    this.order = value; 
+  }
+
+  onTableDataChange(event: any) {
+    this.page = event;
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+  }
+
   changeContent(content: activeTab) {
     this.switchTabs = content;
   }
-
-  
 
   onSysAcctCreate(sysAcctCreateData: [key: string]) {
     const headers = new HttpHeaders({
