@@ -14,6 +14,8 @@ import { PreSpinnerComponent } from './reuseable-components/pre-spinner/pre-spin
 import { PreLoadingInterceptor } from './reuseable-components/loader/pre-loading.interceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AdminLoginConfirmPageComponent } from './pages/admin-login-confirm-page/admin-login-confirm-page.component';
+import { ChatDialogContentComponent } from './reuseable-components/chat-dialog-content/chat-dialog-content.component';
+import { ImageDialogContentComponent } from './reuseable-components/image-dialog-content/image-dialog-content.component';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { AdminLoginConfirmPageComponent } from './pages/admin-login-confirm-page
     PageNotFoundComponent,
     PreSpinnerComponent,
     AdminLoginConfirmPageComponent,
+    ChatDialogContentComponent,
+    ImageDialogContentComponent,
   ],
   imports: [
     BrowserModule,

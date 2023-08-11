@@ -18,10 +18,10 @@
         <p class="badge bg-success nx-2 sortByDiv" (click)="getCredits()">CREDIT</p>
         <p class="badge bg-danger mx-2 sortByDiv" (click)="getDebits()">DEBIT</p>
         <p class="badge bg-primary mx-2 sortByDiv" (click)="getAll()">ALL</p>
-        <p class="badge bg-warning mx-2 sortByDiv" (click)="getNGNWallet()">NGN Wallets</p>
-        <p class="badge bg-info mx-2 sortByDiv" (click)="getUSDWallet()">USD Wallets</p>
-        <p class="badge bg-secondary mx-2 sortByDiv" (click)="getEURWallet()">EUR Wallets</p>
-        <p class="badge bg-dark mx-2 sortByDiv" (click)="getGBPWallet()">GBP Wallets</p>
+        <p class="badge bg-warning mx-2 sortByDiv" (click)="getNGNWallet()">NGN GLs</p>
+        <p class="badge bg-info mx-2 sortByDiv" (click)="getUSDWallet()">USD GLs</p>
+        <p class="badge bg-secondary mx-2 sortByDiv" (click)="getEURWallet()">EUR GLs</p>
+        <p class="badge bg-dark mx-2 sortByDiv" (click)="getGBPWallet()">GBP GLs</p>
       </div>
 
       <div class="table-responsive mt-2 mx-2">
@@ -34,6 +34,9 @@
               </th>
               <th scope="col" (click)="setOrder('narration')">
                 NARRATION <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+              </th>
+              <th scope="col" (click)="setOrder('walletAccount')">
+                WALLET ACCOUNT <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
               </th>
               <th scope="col" (click)="setOrder('systAccountNumber')">
                 SYSTEM ACCOUNT <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
@@ -54,6 +57,7 @@
               <!-- <td>{{item.amount |currency:item.currency:"symbol":"1.2-2"}}</td> -->
               <td>{{item.amount}}</td>
               <td>{{item.narration}}</td>
+              <td>{{item.walletAccount}}</td>
               <td>{{item.systAccountNumber}}</td>
               <td>
                 <p [ngClass]="item.transactionType == 'CREDIT' ? 'badge bg-success' : 'badge bg-danger'">{{item.transactionType}}</p>

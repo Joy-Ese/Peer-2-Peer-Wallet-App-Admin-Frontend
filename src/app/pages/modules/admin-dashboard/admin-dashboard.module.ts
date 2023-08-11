@@ -24,6 +24,8 @@ import { TransactionPageComponent } from '../../transaction-page/transaction-pag
 import { AdminPageComponent } from '../../admin-page/admin-page.component';
 import { KycValidationPageComponent } from '../../kyc-validation-page/kyc-validation-page.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { SignalrService } from 'src/app/services/signalr.service';
+import { DatePipe } from '@angular/common';
 
 
 const routes: Routes = [
@@ -104,6 +106,8 @@ const routes: Routes = [
       multi: true
     },
     BnNgIdleService,
+    SignalrService,
+    DatePipe
   ],
   exports: [RouterModule]
 })

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, Observable } from 'rxjs';
+import { SignalrService } from '../services/signalr.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AdminAuthService {
 
   private adminUserLoggedIn = new Subject<boolean>();
 
-  constructor(private router: Router) { 
+  constructor(private router: Router, private signalrService : SignalrService) { 
     this.adminUserLoggedIn.next(false);
   }
 
@@ -38,13 +39,4 @@ export class AdminAuthService {
     return this.isAdminLoggedIn;
   }
 
-  logoutAdminUser() {
-    localStorage.removeItem("adminToken");
-    localStorage.removeItem("adminLoginResponse");
-    localStorage.clear();
-    this.router.navigate(['/adminlogin']);
-    setTimeout(() => {
-      window.location.reload();
-    }, 300);
-  }
 }

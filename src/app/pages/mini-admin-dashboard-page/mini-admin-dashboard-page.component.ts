@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { SignalrService } from 'src/app/services/signalr.service';
 
 @Component({
   selector: 'app-mini-admin-dashboard-page',
@@ -12,6 +13,18 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 export class MiniAdminDashboardPageComponent implements OnInit{
 
   baseUrl : string = "http://localhost:7236";
+
+  adminCount: number = 0;
+  users:any;
+
+  searchText!: string;
+
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 5;
+
+  order!: string;
+  reverse: boolean = false;
 
   status! : boolean;
   verified : number = 0;
@@ -25,10 +38,31 @@ export class MiniAdminDashboardPageComponent implements OnInit{
   constructor(
     private router: Router, 
     private http: HttpClient, 
+    private signalrService: SignalrService
     ){}
 
   ngOnInit() {
+    this.GetAdminIsLoggedIn();
     this.getUserDataForAdmin();
+    this.signalrService.startConnection();
+    this.signalrService.onUpdateAdmin(() => {
+      this.GetAdminIsLoggedIn();
+    });
+  }
+
+  setOrder(value: string) { 
+    if (this.order === value) { 
+      this.reverse = !this.reverse; 
+    } 
+    this.order = value; 
+  }
+
+  onTableDataChange(event: any) {
+    this.page = event;
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
   }
 
   getUserDataForAdmin() {
@@ -47,6 +81,22 @@ export class MiniAdminDashboardPageComponent implements OnInit{
           this.createPieChart();
           this.createBarChart();
         }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  GetAdminIsLoggedIn() {
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+    this.http.get<any>(`${this.baseUrl}/api/Account/GetAdminIsLoggedIn`, {headers: headers})
+    .subscribe({
+      next: (res) => {
+        this.adminCount = res.count;
+        this.users = res.returneds;
       },
       error: (err) => {
         console.log(err);
@@ -98,5 +148,6 @@ export class MiniAdminDashboardPageComponent implements OnInit{
       }
     });
   }
+
 
 }

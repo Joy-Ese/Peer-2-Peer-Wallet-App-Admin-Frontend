@@ -1,3 +1,21 @@
 .chart-container {
-  margin-top: 100px;
+  margin-top: 20px;
+}
+
+.tranDiv {
+  color: #003366!important;
+  font-weight: 500;
+  border-radius: 25px;
+}
+
+.tableBody {
+  font-size: 15px;
+}
+
+.raisedbox { 
+  padding-top: 50px;
+}
+
+.pointer {
+  cursor: pointer;
 }

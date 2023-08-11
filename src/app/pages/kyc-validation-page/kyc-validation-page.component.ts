@@ -1,5 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageDialogContentComponent } from 'src/app/reuseable-components/image-dialog-content/image-dialog-content.component';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
@@ -13,9 +15,6 @@ export class KycValidationPageComponent implements OnInit{
 
   userInfoKycs!: any[];
 
-  kycs!: any[];
-  userId! : number;
-
   page: number = 1;
   count: number = 0;
   tableSize: number = 5;
@@ -28,10 +27,9 @@ export class KycValidationPageComponent implements OnInit{
 
   scaImage: boolean = false;
 
-  constructor(private http: HttpClient,) {}
+  constructor(private http: HttpClient, public dialog: MatDialog) {}
 
   ngOnInit() {
-    this.getKycValidations();
     this.getUserInfoOnKycUploadsForAdmin();
   }
 
@@ -59,24 +57,7 @@ export class KycValidationPageComponent implements OnInit{
     });
   }
 
-  getKycValidations() {
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json"
-    });
-    this.http.get<any[]>(`${this.baseUrl}/api/Dashboard/GetKycUploadsForAdmin`,
-    {headers: headers})
-    .subscribe({
-      next: (res) => {
-        console.log(res)
-        this.kycs = res;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
-
-  acceptImage(value1: string, value2: string) {
+  acceptImage(value1: string, value2: string, value3: string) {
     const headers = new HttpHeaders({
       "Content-Type": "application/json"
     });
@@ -84,8 +65,9 @@ export class KycValidationPageComponent implements OnInit{
     const params = new URLSearchParams();
     params.append("userId", value1);
     params.append("filename", value2);
+    params.append("filecode", value3);
 
-    this.http.put<any>(`${this.baseUrl}/api/Dashboard/AcceptImage?${params}&${params}`, {headers: headers})
+    this.http.put<any>(`${this.baseUrl}/api/Dashboard/AcceptImage?${params}&${params}&${params}`, {headers: headers})
     .subscribe({
       next: (res) => {
         this.respMsg = res.message;
@@ -110,7 +92,7 @@ export class KycValidationPageComponent implements OnInit{
     });
   }
 
-  removeImage(value1: string, value2: string) {
+  removeImage(value1: string, value2: string, value3: string) {
     const headers = new HttpHeaders({
       "Content-Type": "application/json"
     });
@@ -118,8 +100,9 @@ export class KycValidationPageComponent implements OnInit{
     const params = new URLSearchParams();
     params.append("userId", value1);
     params.append("filename", value2);
+    params.append("filecode", value3);
 
-    this.http.put<any>(`${this.baseUrl}/api/Dashboard/RemoveImage?${params}&${params}`, {headers: headers})
+    this.http.put<any>(`${this.baseUrl}/api/Dashboard/RemoveImage?${params}&${params}&${params}`, {headers: headers})
     .subscribe({
       next: (res) => {
         this.respMsg = res.message;
@@ -144,14 +127,14 @@ export class KycValidationPageComponent implements OnInit{
     });
   }
 
-  scaleImage() {
-    this.scaImage = !this.scaImage;
-    if (this.scaImage == true) {
-      var img = document.getElementById("imgKYC");
-      // img.style.width = "60%";
-      // img.style.height = "auto";
-      // img.style.transition = "width 0.5s ease";
-    }
+  openImageDialog(enterAnimationDuration: string, exitAnimationDuration: string, imageUrl: string): void {
+    this.dialog.open(ImageDialogContentComponent, {
+      data: imageUrl,
+      width: '650px',
+      height: '480px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 
   onTableDataChange(event: any) {

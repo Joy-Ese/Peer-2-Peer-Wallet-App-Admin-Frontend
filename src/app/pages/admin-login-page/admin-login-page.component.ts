@@ -45,6 +45,7 @@ export class AdminLoginPageComponent implements OnInit{
         console.log(this.adminLoginResponseFromBackEnd);
         this.key = localStorage.setItem("adminLoginResponse", JSON.stringify(this.adminLoginResponseFromBackEnd));
         localStorage.setItem("adminToken", this.adminLoginResponseFromBackEnd.result);
+        localStorage.setItem("adminUsername", this.adminLoginResponseFromBackEnd.adminUsername);
 
         if (this.status == true && this.isSecure == true) {
           this.adminAuthService.setAdminUserLoggedIn(true);

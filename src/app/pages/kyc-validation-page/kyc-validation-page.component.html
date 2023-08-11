@@ -17,25 +17,25 @@
                       <th scope="col" (click)="setOrder('image')">
                         IMAGE <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
                       </th>
-                      <th scope="col" (click)="setOrder('timeUploaded')">
+                      <th scope="col" (click)="setOrder('list.timeUploaded')">
                         DATE UPLOADED <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
                       </th>
                       <th scope="col">ACTION</th>
                     </tr>
                   </thead>
                   <tbody class="tableBody">
-                    <tr *ngFor="let item of kycs" >
-                      <td><img src="{{item.image}}" class="img-responsive img-thumbnail img-fluid kycIMG" id="imgKYC" (click)="scaleImage()"></td>
+                    <tr *ngFor="let a of item.list">
+                      <td><img src="{{a.image}}" class="img-responsive img-thumbnail img-fluid kycIMG" id="imgKYC" (click)="openImageDialog('1500ms', '750ms', a.image)"></td>
                       <td>
-                        <p class="badge bg-primary dateColour">{{item.timeUploaded | date:'dd/MM/YYYY hh:mm a'}}</p> <br>
+                        <p class="badge bg-primary dateColour">{{a.timeUploaded | date:'dd/MM/YYYY hh:mm a'}}</p> <br>
                       </td>
                       <td>
-                        <button type="button" class="btn btn-outline-success mx-3" (click)="acceptImage(item.userId, item.filename)">
+                        <button type="button" class="btn btn-outline-success mx-3" (click)="acceptImage(a.userId, a.filename, a.filecode)">
                           <span class="mt-5">Accept</span>
                           <i class="fa fa-check-square mx-2"></i>
                         </button>
 
-                        <button type="button" class="btn btn-outline-danger" (click)="removeImage(item.userId, item.filename)">
+                        <button type="button" class="btn btn-outline-danger" (click)="removeImage(a.userId, a.filename, a.filecode)">
                           <span>Reject</span>
                           <i class="fa fa-times mx-2"></i>
                         </button>
@@ -44,21 +44,21 @@
                   </tbody>
                 </table>
               </div>
-          </mat-expansion-panel>
+            </mat-expansion-panel>
         </mat-accordion>
-
-        <div class="d-flex justify-content-center raisedbox mt-5">
-          <pagination-controls
-            previousLabel="Prev"
-            nextLabel="Next"
-            (pageChange)="onTableDataChange($event)"
-          >
-          </pagination-controls>
-        </div>
       </div>
 
-      <div *ngIf="userInfoKycs.length == 0">
+      <div *ngIf="userInfoKycs?.length == 0">
         <h2 class="mx-2">There are no pending Kyc Uploads...</h2>
+      </div>
+
+      <div class="d-flex justify-content-center raisedbox mt-5">
+        <pagination-controls
+          previousLabel="Prev"
+          nextLabel="Next"
+          (pageChange)="onTableDataChange($event)"
+        >
+        </pagination-controls>
       </div>
     </div>
   </div>
