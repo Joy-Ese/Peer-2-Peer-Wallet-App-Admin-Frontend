@@ -1,0 +1,24 @@
+<h4 mat-dialog-title class="fw-bold mx-2 mt-3">Rejecting a document?</h4>
+<div mat-dialog-content class="mx-2">
+  <div class="row">
+    <div class="d-flex mt-3">
+      <div>
+        <img class="img-fluid imgLog" src="../../../assets/images/undraw_cancel.svg" alt="">
+      </div>
+      <div class="col-9">
+        <form #rejectReasonForm="ngForm">
+          <div class="form-outline">
+            <div class="col-md-11 mb-3">
+              <label class="form-label">Reason for rejecting document</label>
+              <input #reason type="text" class="form-control mat-elevation-z4" name="reason" ngModel required/>
+            </div>
+          </div>
+
+          <button class="btn btn-outline-secondary mb-3 mt-3" type="submit" (click)="rejectDoc(rejectReasonForm.value)">
+            Send
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

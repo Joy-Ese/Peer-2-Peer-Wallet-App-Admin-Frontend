@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -10,11 +10,19 @@ import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../snack-bar/snack-bar.component';
+import { AdminInformation } from '../adminImformation';
+import { SignalrService } from 'src/app/services/signalr.service';
 
 @Injectable()
-export class AdminAuthorizeInterceptorInterceptor implements HttpInterceptor {
+export class AdminAuthorizeInterceptorInterceptor implements HttpInterceptor, OnInit{
 
-  constructor(private router: Router, private matSnackBar: MatSnackBar) {}
+  adminDetails! : any;
+
+  constructor(private router: Router, private matSnackBar: MatSnackBar, private signalrService : SignalrService) {}
+
+  ngOnInit() {
+    this.adminDetails = AdminInformation();
+  }
 
   passDataToSnackComponent() {
     this.matSnackBar.openFromComponent(SnackBarComponent, {
@@ -39,7 +47,9 @@ export class AdminAuthorizeInterceptorInterceptor implements HttpInterceptor {
       },
       error: (error) => {
         if(error.status === 401) {
+          this.signalrService.hubConnection.invoke("onAdminLogOut", this.adminDetails.adminUsername);
           this.passDataToSnackComponent();
+          localStorage.clear();
           setTimeout(() => {this.router.navigate(['/adminlogin'])}, 4000);
         }
         else if(error.status === 404) {

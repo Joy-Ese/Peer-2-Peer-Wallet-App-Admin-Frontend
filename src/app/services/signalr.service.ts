@@ -41,5 +41,15 @@ export class SignalrService {
     }
 
 
+  onReceiveMessage(callback: (userName:string) => void) {
+    this.hubConnection.on("ReceiveMessage", callback);
+    }
+
+
+  // onUpdateChatCount(callback: () => void) {
+  //   this.hubConnection.on("UpdateChatCount", callback);
+  //   }
+
+
 
 }

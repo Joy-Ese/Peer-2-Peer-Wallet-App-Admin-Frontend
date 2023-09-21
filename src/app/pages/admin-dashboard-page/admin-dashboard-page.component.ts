@@ -31,7 +31,7 @@ export class AdminDashboardPageComponent implements OnInit{
     private bnIdle: BnNgIdleService,
     public dialog: MatDialog, 
     private http: HttpClient, 
-    private signalrService : SignalrService
+    private signalrService : SignalrService,
     ){}
 
   ngOnInit() {
@@ -39,10 +39,13 @@ export class AdminDashboardPageComponent implements OnInit{
     this.adminDetails = AdminInformation();
     this.bnIdle.startWatching(1500).subscribe((res) => {
       if (res) {
+        var username = localStorage.getItem("adminUsername");
+        this.signalrService.hubConnection.invoke("onAdminLogOut", username);
         this.passDataToSnackComponent();
-        this.onAdminLogout(this.adminDetails.adminUsername);
-        localStorage.clear();
         this.router.navigate(['/adminlogin']);
+        // this.onAdminLogout(this.adminDetails.adminUsername);
+        localStorage.clear();
+        this.bnIdle.stopTimer();
       }
     });
   }

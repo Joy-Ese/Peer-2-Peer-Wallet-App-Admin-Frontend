@@ -5,13 +5,14 @@
 
 #msgBox {
   padding: 5px 10px 5px 10px;
-  height: 250px;
+  height: 255px;
   overflow-y: auto;
 }
 
 .chatterColour {
   background-color: #003366!important;
   color: white!important;
+  font-size: 15px;
 }
 
 .right {

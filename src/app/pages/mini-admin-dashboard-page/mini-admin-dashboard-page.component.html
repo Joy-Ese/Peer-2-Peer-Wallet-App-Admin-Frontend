@@ -1,58 +1,104 @@
 <div class="row">
-  <div class="col-6">
-    <div class="chart-container">
-      <canvas  id="MyPieChart" >{{ pieChart }}</canvas>
+  <div class="col-12 d-flex justify-content-between">
+    <div class="col-8">
+      <div class="row">
+        <div class="col-10 tranDiv">
+          <div class="table-responsive mt-1 mx-4">
+            <table class="table table-bordered text-center align-middle" 
+            *ngIf="(usersInApp | filterBy: searchText1).length > 0">
+            <thead>
+              <tr>
+                <th scope="col" (click)="setOrder1('userName')">
+                  NAME <span class="pointer" [hidden]="reverse1">▼</span><span class="pointer" [hidden]="!reverse1">▲</span>
+                </th>
+                <th scope="col" (click)="setOrder1('userProfile')">
+                  PROFILE <span class="pointer" [hidden]="reverse1">▼</span><span class="pointer" [hidden]="!reverse1">▲</span>
+                </th>
+                <th scope="col">
+                  CHAT
+                </th>
+              </tr>
+            </thead>
+            <tbody class="tableBody">
+              <tr *ngFor="let item of usersInApp | filterBy: searchText1 | paginate: {itemsPerPage: tableSize1, currentPage: page1, totalItems: count1}; let i = index">
+                <td>{{item.userName}}</td>
+                <td>{{item.userProfile}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary notificationColour" (click)="openChatDialog('600ms', '300ms', item.userName)">
+                    <mat-icon class="ico">message</mat-icon><span class="badge bg-danger">{{chatCount}}</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+            </table>
+
+            <div class="d-flex justify-content-center raisedbox">
+              <pagination-controls
+                previousLabel="Prev"
+                nextLabel="Next"
+                (pageChange)="onTableDataChange1($event)"
+              >
+              </pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="chart-container">
+        <canvas  id="MyBarChart" >{{ barChart }}</canvas>
+      </div>
     </div>
   </div>
-  <div class="col-6">
-    <div class="chart-container">
-      <canvas  id="MyBarChart" >{{ barChart }}</canvas>
+  <div class="col-12 d-flex justify-content-between mt-2">
+    <div class="col-8">
+      <h4 class="fw-bold mx-4" *ngIf="adminCount == 1">{{adminCount}} logged in user</h4>
+      <h4 class="fw-bold mx-4" *ngIf="adminCount > 1">{{adminCount}} logged in users</h4>
+      <div class="row">
+        <div class="col-10 tranDiv">
+          <div class="table-responsive mt-1 mx-4">
+            <table class="table table-bordered text-center align-middle" 
+            *ngIf="(users | filterBy: searchText).length > 0">
+              <thead>
+                <tr>
+                  <th scope="col" (click)="setOrder('username')">
+                    NAME <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+                  </th>
+                  <th scope="col" (click)="setOrder('email')">
+                    EMAIL <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="tableBody">
+                <tr *ngFor="let item of users | filterBy: searchText | paginate: {itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index">
+                  <td>{{item.username}}</td>
+                  <td>{{item.email}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div *ngIf="users?.length == 0">
+              <h2 class="mx-2">There are no logged in users...</h2>
+            </div>
+
+            <!-- <div class="d-flex justify-content-center raisedbox">
+              <pagination-controls
+                previousLabel="Prev"
+                nextLabel="Next"
+                (pageChange)="onTableDataChange($event)"
+              >
+              </pagination-controls>
+            </div> -->
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
-<div class="row">
-  <h4 class="fw-bold mx-4" *ngIf="adminCount == 1">{{adminCount}} logged in user</h4>
-  <h4 class="fw-bold mx-4" *ngIf="adminCount > 1">{{adminCount}} logged in users</h4>
-  <div class="row">
-    <div class="col-10 tranDiv">
-      <div class="table-responsive mt-1 mx-4">
-        <table class="table table-bordered text-center align-middle" 
-        *ngIf="(users | filterBy: searchText).length > 0">
-          <thead>
-            <tr>
-              <th scope="col" (click)="setOrder('username')">
-                NAME <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
-              </th>
-              <th scope="col" (click)="setOrder('email')">
-                EMAIL <span class="pointer" [hidden]="reverse">▼</span><span class="pointer" [hidden]="!reverse">▲</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody class="tableBody">
-            <tr *ngFor="let item of users | filterBy: searchText | paginate: {itemsPerPage: tableSize, currentPage: page, totalItems: count}; let i = index">
-              <td>{{item.username}}</td>
-              <td>{{item.email}}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div *ngIf="users?.length == 0">
-          <h2 class="mx-2">There are no logged in users...</h2>
-        </div>
-
-        <div class="d-flex justify-content-center raisedbox">
-          <pagination-controls
-            previousLabel="Prev"
-            nextLabel="Next"
-            (pageChange)="onTableDataChange($event)"
-          >
-          </pagination-controls>
-        </div>
+    <div class="col-4">
+      <div class="chart-container">
+        <canvas  id="MyPieChart" >{{ pieChart }}</canvas>
       </div>
     </div>
   </div>
 </div>
-
 
 <app-admin-spinner></app-admin-spinner>

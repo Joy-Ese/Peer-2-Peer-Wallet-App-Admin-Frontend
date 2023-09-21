@@ -11,15 +11,6 @@
   margin-top: 10px;
 }
 
-.notificationColour {
-	background-color: #003366!important;
-}
-
-.notificationColour:hover {
-	transform: translateY(-3px);
-	box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-}
-
 .ico {
   color: white;
 	font-size: 27px;
@@ -81,18 +72,13 @@ mat-divider {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.adminDiv {
-  position: relative;
-  left: 140%;
-}
-
 .adminName {
   color: #003366;
 }
 
 .spanBadge {
-  position: absolute;
-  right: -10%;
-  bottom: 5%;
+  position: relative;
+  right: 30%;
+  bottom: -30%;
   font-size: 12px;
 }

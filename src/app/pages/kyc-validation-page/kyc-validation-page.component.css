@@ -28,16 +28,35 @@
   padding-top: 50px;
 }
 
-.kycIMG {
-  width: 70px;
-	height: 70px;
-}
-
 .pendingSpan {
   color: #FF0033;
   font-size: 20px;
 }
 
+.kycIMG {
+  width: 70%;
+  height: 150px;
+}
+
+.btn-outline-danger {
+  background-color: #FF0033!important;
+  color: white!important;
+}
+
+.btn-outline-danger:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline-success {
+  background-color: #003366!important;
+  color: white!important;
+}
+
+.btn-outline-success:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
 
 
 

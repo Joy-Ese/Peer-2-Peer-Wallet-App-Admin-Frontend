@@ -1,7 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ImageDialogContentComponent } from 'src/app/reuseable-components/image-dialog-content/image-dialog-content.component';
+import { PdfDialogContentComponent } from 'src/app/reuseable-components/pdf-dialog-content/pdf-dialog-content.component';
+import { ReasonDialogContentComponent } from 'src/app/reuseable-components/reason-dialog-content/reason-dialog-content.component';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
@@ -27,7 +30,7 @@ export class KycValidationPageComponent implements OnInit{
 
   scaImage: boolean = false;
 
-  constructor(private http: HttpClient, public dialog: MatDialog) {}
+  constructor(private http: HttpClient, public dialog: MatDialog, private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     this.getUserInfoOnKycUploadsForAdmin();
@@ -55,6 +58,10 @@ export class KycValidationPageComponent implements OnInit{
         console.log(err);
       },
     });
+  }
+
+  sanitizeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   acceptImage(value1: string, value2: string, value3: string) {
@@ -124,6 +131,32 @@ export class KycValidationPageComponent implements OnInit{
       error: (err) => {
         console.log(err);
       },
+    });
+  }
+
+  openReasonDialog(enterAnimationDuration: string, exitAnimationDuration: string, value1: string, value2: string, value3: string): void {
+    this.dialog.open(ReasonDialogContentComponent, {
+      data: {
+        removeImage: {
+          val1: value1,
+          val2: value2,
+          val3: value3
+        }
+      }, 
+      width: '630px',
+      height: '480px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+
+  openPdfDialog(enterAnimationDuration: string, exitAnimationDuration: string, pdfUrl: string): void {
+    this.dialog.open(PdfDialogContentComponent, {
+      data: pdfUrl,
+      width: '650px',
+      height: '480px',
+      enterAnimationDuration,
+      exitAnimationDuration,
     });
   }
 

@@ -19,3 +19,17 @@
 .pointer {
   cursor: pointer;
 }
+
+.notificationColour {
+	background-color: #003366!important;
+}
+
+.notificationColour:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.ico {
+  color: white;
+	font-size: 27px;
+}

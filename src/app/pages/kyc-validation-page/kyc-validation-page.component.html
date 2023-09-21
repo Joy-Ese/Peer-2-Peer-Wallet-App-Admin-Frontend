@@ -25,19 +25,34 @@
                   </thead>
                   <tbody class="tableBody">
                     <tr *ngFor="let a of item.list">
-                      <td><img src="{{a.image}}" class="img-responsive img-thumbnail img-fluid kycIMG" id="imgKYC" (click)="openImageDialog('1500ms', '750ms', a.image)"></td>
+                      <td >
+                        <iframe 
+                          [src]="sanitizeUrl(a.isPdf)"
+                          frameborder="0" 
+                          width="70%" 
+                          height="150px"
+                          (click)="openPdfDialog('1500ms', '750ms', a.isPdf)"
+                          *ngIf="a.isPdf != null"
+                        >
+                        </iframe>
+
+                        <img 
+                          src="{{a.image}}" 
+                          class="img-responsive img-thumbnail img-fluid kycIMG" 
+                          (click)="openImageDialog('1500ms', '750ms', a.image)"
+                          *ngIf="a.image != null"
+                        >
+                      </td>
                       <td>
                         <p class="badge bg-primary dateColour">{{a.timeUploaded | date:'dd/MM/YYYY hh:mm a'}}</p> <br>
                       </td>
                       <td>
-                        <button type="button" class="btn btn-outline-success mx-3" (click)="acceptImage(a.userId, a.filename, a.filecode)">
-                          <span class="mt-5">Accept</span>
-                          <i class="fa fa-check-square mx-2"></i>
+                        <button type="button" class="btn btn-outline-danger" (click)="openReasonDialog('1500ms', '750ms', a.userId, a.filename, a.filecode)">
+                          <span>Reject</span>
                         </button>
 
-                        <button type="button" class="btn btn-outline-danger" (click)="removeImage(a.userId, a.filename, a.filecode)">
-                          <span>Reject</span>
-                          <i class="fa fa-times mx-2"></i>
+                        <button type="button" class="btn btn-outline-success mx-3" (click)="acceptImage(a.userId, a.filename, a.filecode)">
+                          <span class="mt-5">Accept</span>
                         </button>
                       </td>
                     </tr>
